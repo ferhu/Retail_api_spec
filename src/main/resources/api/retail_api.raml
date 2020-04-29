@@ -1,0 +1,124 @@
+#%RAML 1.0
+title: Retail_Api
+
+traits:
+  GetAllProducts: !include Traits/GetAllProducts.raml
+  GetProductsbyID: !include Traits/GetProductsbyID.raml
+  Put products by Id: !include Traits/UpdateProductsbyId.raml
+  Delete products By Id : !include Traits/DeleteProductsbyId.raml
+  Create All Products: !include Traits/CreateAllProducts.raml
+  Get All Bills Data : !include Traits/GetAllBillsdata.raml
+  Get Bill Data Byid: !include Traits/GetBillDataById.raml
+  Update Bill Data By Id: !include Traits/UpdateBilldataById.raml
+  Delete Bill Data By Id: !include Traits/DeleteBillDataById.raml
+  Create all Bills Data: !include Traits/CreateAllBillsData.raml
+  Get all ProductCatagory: !include Traits/GetProductsCatagoryall.raml
+  Get product Catagory by Id: !include Traits/GetproductCatagorybyId.raml
+  Update product Catagory by Id: !include Traits/UpdateproductCatagorybyId.raml
+  Create all Products Catagory: !include Traits/Createallproductscatagory.raml
+  DeleteproductCatagorybyId: !include Traits/DeleteproductCatagorybyId.raml
+
+/products:
+ 
+  description: retrive list all products
+  displayName: get product
+  get:
+   description: retrive all products
+   displayName: fetch Products
+   is:
+     - GetAllProducts
+          
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    get:
+      description: retrive specfic products
+      displayName: fetch products
+      is:
+        - GetProductsbyID:
+    put:
+      description: updeate specfic products
+      displayName: updeate 
+      is:
+        - Put products by Id
+    delete:
+      description: remove specfic products
+      displayName: delete products 
+      is:
+        - Delete products By Id  
+   
+  post:
+     description: create all products
+     displayName: create products
+     is:
+        - Create All Products 
+/Bill:
+  description: retrive list all Bill data
+  displayName: get bill data
+  get:
+    description: fetch all Bill data
+    displayName: excute bill data information
+    is:
+      - Get All Bills Data 
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    get:
+      description: retrive specfic bill data
+      displayName: fetch bill data
+      is:
+        - Get Bill Data Byid 
+    put:
+      description: updeate bill data
+      displayName: updeate
+      is:
+        -  Update Bill Data By Id
+    delete:
+      description: remove bill data by id
+      displayName: delete bill data
+      is:
+        -  Delete Bill Data By Id
+  post:
+    description: create Bills Data
+    displayName: register
+    is:
+      - Create all Bills Data 
+/ProductCatagory:
+  description: list all ProductCatagory
+  displayName: excute ProductCatagory
+  get:
+   description: fetches list of all productcatagorydata
+   displayName: retrive ProductCatagory
+   is:
+   - Get all ProductCatagory
+  
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        required: true
+    get:
+       description: retrive ProductCatagory by id
+       displayName: fetch ProductCatagory
+       is:
+        - Get product Catagory by Id
+    put:
+      description: updeate ProductCatagory by id
+      displayName: update
+      is:
+       - Update product Catagory by Id
+      
+    delete:
+      description: remove ProductCatagory data by id
+      displayName: delete ProductCatagory data
+      is:
+       - DeleteproductCatagorybyId
+  post:
+   description: create all ProductCatagory data
+   displayName: product catagory data 
+  is:
+   - Create all Products Catagory

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="4770e3e6-b5a7-457f-a5d6-93d30976dc31" >
+		<wsc:connection wsdlLocation="http://dev.icraftsoft.net:8093/ws/retail.wsdl" service="RetailPortService" port="RetailPortSoap11" address="http://dev.icraftsoft.net:8093/ws" />
+	</wsc:config>
+	<flow name="put:\Bill\(id):retail_api-config" doc:id="f9447cb6-3cd7-487a-96ed-d47de5941215" >
+		<ee:transform doc:name="Transform Message" doc:id="3477525d-30c1-4ee2-adaf-773b7d969188" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#UpdateBillRequest: {
+		ns0#Bill: {
+			ns0#id: attributes.uriParams.id,
+			ns0#noOfItems: payload.noOfItems,
+			ns0#totalCost: payload.totalCost,
+			ns0#totalTax: payload.totalTax,
+			ns0#totalValue: payload.totalValue
+		}
+	}
+}]]></ee:set-payload>
+				<ee:set-attributes ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-attributes>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume operation="UpdateBill" doc:name="Consume" doc:id="1c02cbd7-ab00-4412-8831-26a3caa0b2f0" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="3ed8e0b9-2c56-4f46-b5f7-b9f833a971ef" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#UpdateBillResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="delete:\Bill\(id):retail_api-config" doc:id="e27da4b6-f578-4d6d-a8c0-c9a6d4ae7345" >
+		<ee:transform doc:name="Transform Message" doc:id="2bbcf26e-2030-4084-821c-04704f9f0cc0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#DeleteBillRequest: {
+		ns0#id: attributes.uriParams.ns0#id
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="91e1b80a-6183-41a6-9ab3-eb2e2c21d664" operation="DeleteBill" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="0d723a51-d9dc-4478-96b6-9372fe4b65a0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#DeleteBillResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="get:\Bill\(id):retail_api-config" doc:id="cde414bc-0d88-4187-9d35-bc87fd710bb9" >
+		<ee:transform doc:name="Transform Message" doc:id="99818c7c-4654-4792-af0e-576f790489d6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#GetBillRequest: {
+		ns0#id: attributes.uriParams.ns0#id
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="920f1176-0aa6-40ae-8c2c-4fc5cbd8e21e" operation="GetBill" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="a1a34d9c-31b3-4ddd-a92d-5beb7b21575d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#GetBillResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="get:\Bill:retail_api-config" doc:id="7631a240-6cd7-41a1-a0f8-70fea3e53ab3" >
+		<ee:transform doc:name="Transform Message" doc:id="021b79a6-1a7d-4530-81c0-6e6cc285baed" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#GetAllBillsRequest: payload
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="2e3b2075-d5c0-4039-b6ae-97d0655f4d70" operation="GetAllBills" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="296c3663-a0fa-4472-98d2-9c28b95738cb" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#GetAllBillsResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="post:\Bill:retail_api-config" doc:id="104de0f6-5e8e-4955-957b-209eb641572a" >
+		<ee:transform doc:name="Transform Message" doc:id="965958fc-9045-4887-a70a-4b6435d10a26" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#CreateBillRequest: {
+		ns0#CreateBill: {
+			ns0#id: payload.id,
+			ns0#noOfItems: payload.noOfItems,
+			ns0#totalCost: payload.totalCost,
+			ns0#totalTax: payload.totalTax,
+			ns0#totalValue: payload.totalValue
+		}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="125ef956-51eb-4031-9b9e-ca7b7d26017f" operation="CreateBill" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="b7adcf9f-0c7f-4bd1-8934-9846a836fe58" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#CreateBillResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

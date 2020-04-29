@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+	<flow name="get:\ProductCatagory:retail_api-config" doc:id="6f572e93-6280-4bf5-a859-6036afbf05c4" >
+		<ee:transform doc:name="Transform Message" doc:id="5180f271-2811-4513-9886-0f7054767b79" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#GetAllProductCategorysRequest: payload
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="fb590355-071b-4592-b7d4-eecb560fe4ce" operation="GetAllProductCategorys" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="3a9c33da-631b-4885-8828-078cc781381a">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#GetAllProductCategorysResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="post:\ProductCatagory:retail_api-config" doc:id="5a535114-411d-474e-8ce9-6259e29c3f88" >
+		<ee:transform doc:name="Transform Message" doc:id="880bac5b-66c1-4497-9d3a-fcd3f50083a3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#CreateProductCategoryRequest: {
+		ns0#CreateProductCategory: {
+			ns0#id: payload.id,
+			ns0#name: payload.name
+		}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="f207e888-6c47-4747-8422-b9f4d8ab9fef" operation="CreateProductCategory" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="0397d292-5336-4c6d-9e30-a23110527739" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#CreateProductCategoryResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="get:\ProductCatagory\(id):retail_api-config" doc:id="2bd78179-8e50-48fe-b30b-cf0f42ad1082" >
+		<ee:transform doc:name="Transform Message" doc:id="5e920509-776c-4746-8a57-caa8c1a8f091" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#GetProductCategoryRequest: {
+		ns0#id:attributes.uriParams.id
+		
+		}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="79fb6380-63b0-4b03-bb50-72ada40a370c" operation="GetProductCategory" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="423ad8f5-f72f-4ba6-8d04-012019f98766">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#GetProductCategoryResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="delete:\ProductCatagory\(id):retail_api-config" doc:id="9005a36d-0d85-406b-aea9-2c562ae6f760" >
+		<ee:transform doc:name="Transform Message" doc:id="0969048d-5ea4-47da-9616-a29a48269514" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#DeleteProductCategoryRequest: {
+		ns0#id: attributes.uriParams.id
+	}
+}]]></ee:set-payload>
+				<ee:set-attributes ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-attributes>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="565e1d5e-1eb1-4468-a23f-723496c3da59" operation="DeleteProductCategory" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="52e4ef91-b693-430c-b7ee-da32410b8d41" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#DeleteProductCategoryResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="put:\ProductCatagory\(id):retail_api-config" doc:id="e6980a09-e49d-4236-830d-9538174dcd21" >
+		<ee:transform doc:name="Transform Message" doc:id="e0b81a91-b236-428e-af8d-8d24a13aaf6a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.craftsoftware.com/retail
+---
+{
+	ns0#UpdateProductCategoryRequest: {
+		ns0#ProductCategory: {
+			ns0#id: attributes.uriParams.id
+		}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="ee5b4a61-65ef-4da3-a337-7e2a3b47875a" operation="UpdateProductCategory" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="18a79997-b101-454a-a523-7bf2ed9b929f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.craftsoftware.com/retail
+---
+payload.body.ns0#UpdateProductCategoryResponse]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

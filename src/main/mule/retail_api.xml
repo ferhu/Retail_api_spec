@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    <flow name="retail_api-main">
+        <http:listener config-ref="retail_api-httpListenerConfig" path="/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="retail_api-config" />
+    </flow>
+    <flow name="retail_api-console">
+        <http:listener config-ref="retail_api-httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="retail_api-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="put:\ProductCatagory\(id)">
+		<flow-ref doc:name="Flow Reference" doc:id="37cc3385-496e-4a34-8328-0dc8f1cef09f" name="put:\ProductCatagory\(id):retail_api-config"/>
+    </flow>
+    <flow name="put:\Bill\(id)">
+		<flow-ref doc:name="Flow Reference" doc:id="4271ce61-65c2-43cd-9614-0315b64ee660" name="put:\Bill\(id):retail_api-config"/>
+    </flow>
+    <flow name="put:\products\(id)">
+		<flow-ref doc:name="Flow Reference" doc:id="2e85fc53-441e-4709-a756-9583226b1343" name="put:\products\(id):retail_api-config"/>
+    </flow>
+    <flow name="delete:\products\(id)">
+        <flow-ref doc:name="Flow Reference" doc:id="3f5d260a-ac39-4f65-a93e-0278c950027d" name="delete:\products\(id):retail_api-config"/>
+    </flow>
+    <flow name="delete:\ProductCatagory\(id)">
+		<flow-ref doc:name="Flow Reference" doc:id="36f6cbb0-8f0c-4a41-b9e5-cc6d4321f6d6" name="delete:\ProductCatagory\(id):retail_api-config"/>
+    </flow>
+    <flow name="delete:\Bill\(id)">
+		<flow-ref doc:name="Flow Reference" doc:id="ee90b272-a009-4ca6-8ffd-d67c5ce349ec" name="delete:\Bill\(id):retail_api-config"/>
+    </flow>
+    <flow name="get:\products\(id)">
+		<flow-ref doc:name="Flow Reference" doc:id="1c427c9b-476d-4878-a38b-9505f79cedd1" name="get:\products\(id):retail_api-config"/>
+    </flow>
+    <flow name="get:\ProductCatagory\(id)">
+		<flow-ref doc:name="Flow Reference" doc:id="b53b730a-c9d7-441a-9fac-245ba4da3b3b" name="get:\ProductCatagory\(id):retail_api-config"/>
+    </flow>
+    <flow name="get:\Bill\(id)">
+		<flow-ref doc:name="Flow Reference" doc:id="44e45a3a-f501-402b-b067-4ba9cd26e5c7" name="get:\Bill\(id):retail_api-config"/>
+    </flow>
+    <flow name="get:\ProductCatagory">
+		<flow-ref doc:name="Flow Reference" doc:id="61c37242-ce8b-4e38-89f1-80e2acfecb99" name="get:\ProductCatagory:retail_api-config"/>
+    </flow>
+    <flow name="get:\Bill">
+		<flow-ref doc:name="Flow Reference" doc:id="f5a348fd-a573-4ae6-9c66-bb4d82ea60b7" name="get:\Bill:retail_api-config"/>
+    </flow>
+    <flow name="get:\products">
+		<flow-ref doc:name="Flow Reference" doc:id="c1e2d144-e4f4-4f1f-a012-ca943b35caac" name="get:\products:retail_api-config"/>
+    </flow>
+    <flow name="post:\ProductCatagory">
+		<flow-ref doc:name="Flow Reference" doc:id="a04b7a1a-67c6-4f4d-a6d7-036ed3cb8b20" name="post:\ProductCatagory:retail_api-config"/>
+    </flow>
+    <flow name="post:\Bill">
+        <flow-ref doc:name="Flow Reference" doc:id="815dcddc-6b9d-4333-b084-1c1d412017a9" name="post:\Bill:retail_api-config"/>
+    </flow>
+    <flow name="post:\products">
+		<flow-ref doc:name="Flow Reference" doc:id="143dd2cd-9b3a-4a02-a285-768f002a058e" name="post:\products:retail_api-config"/>
+		<ee:transform doc:name="Transform Message" doc:id="09501918-fb5c-4af7-9659-efe1aa367707" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "product created"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+    </flow>
+</mule>

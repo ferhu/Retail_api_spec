@@ -1,0 +1,22 @@
+#%RAML 1.0 Trait
+responses:
+  200:
+    body:
+      application/json:
+        example:
+          {"fetch bill data"}
+  404:
+    body:
+      application/json:
+        example:
+          {"error":"not found"} 
+  411:
+    body:
+      application/json:
+        example:
+         {"error":"length Required"} 
+  308:
+    body:
+      application/json:
+        example:
+          {"permanent redirect"}

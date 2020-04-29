@@ -1,0 +1,22 @@
+#%RAML 1.0 Trait
+responses:
+  202:
+    body:
+      application/json:
+        example:
+          [{"id":" ", type="int"},
+ {name=" " ,type="string"},
+{ name="barcode", type:"string"},
+{ name="rate", type="double"},
+{name="productCategory", type="string"}]
+
+  507:
+    body:
+      application/json:
+        example:
+          {" Insufficient Storage"} 
+  422:
+    body:
+      application/json:
+        example:
+          {"Unprocessable Entity "} 

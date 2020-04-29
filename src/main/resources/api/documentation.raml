@@ -1,0 +1,72 @@
+#%RAML 1.0 DocumentationItem
+title:
+content: SoftwareRequirements Specification
+ 
+    FOR RetailAPI
+   Version1.0 approved
+   Version1.0 approved
+ PreparedbyHenokSolomon
+ SoftwareRequirementsSpecificationforretail
+ TableofContents TableofContents...........................................
+              RevisionHistory
+ Software Requirements Specificationforretail
+   Name Date ReasonforChanges Version HenokSolomon 3/14/2020 Initialproject feature 1.0
+    SoftwareRequirementsSpecificationforRetailAPI
+ 1. Introduction
+   1.1 Purpose This project is used mainly for Retail stores to maintain the details of Retail store such as stock and account. This Retail shop management software is so designed as to ease the work load ofRetail shop professionals. The main feature includes inventory and stock control, accounting, client management it can be used by a wide variety of outlets (Retailers and Wholesalers) to automate the process of manuallymaintainingtherecordsrelatedtothesubject of maintaining thestockand Bill flows. This project is basically updating the manual chemist inventory System To Automated inventory system, So that organization can manage their record in efficient and organized form. 4. This software helps you to track all the products of Retail shop moreover it’s a Retail shop accounting software. Flexible and adaptive software suited to Retail shops or stores or pharmaciesof anysize.
+      SoftwareRequirementsSpecificationforRetailAPI
+   1.2 IntendedAudienceandReadingSuggestions
+   This document is to be read by the development team, the project manager,  marketing staff, testers and documentation writers. Our stakeholders may review the document to learn about the project and to understand the requirements. The SRS has been organized approximately in order of increasing specificity. The developers and project managers need to become intimately familiar withtheSRS.
+Othersinvolved need toreview thedocument assuch: Overall Description – Marketing staff must become accustomed to the various product features in ordertoeffectively advertise theproduct. System features – Testers need an understanding of the system features to develop meaningful testcasesandgive usefulfeedbackto thedevelopers.
+The author would suggest clients to go through the requirement section thoroughly before installing the software. The testers are expected to have certain knowledge in the terms used and hence can go for the security issues directly. Students and developers can utilize the documentation as a resourcein developingtheproject toa new product.
+1.3 ProductScope
+The main goal of the application is to maintain the records of Order, Sales and stock details with Bill transaction maintenance. Retail Store Management software is very needy for Retail Store .This softwarehelp themmaintainday today transactions incomputer. 1.4 References http://api.icraftsoft.net/register/#!/
+SoftwareRequirementsSpecificationforRetailAPI 2. OverallDescription
+2.1 ProductPerspective Main goal of the application is to maintain the records of Order, Sales and stock details with Bill transactionmaintenance. 2.2 ProductFunctions Craftprovides thefollowing described features:
+This project consists of RESTful services that implement a checkout counter for an online retail Order that scans products and generates itemized bill.It provides services for managing products and orders. Productscanbeconfiguredwith rateand category(Organic,InOrganic).
+Sales tax is applied based on the category of the product: Category Organic 10% Category InOrganic 20%.Bill details the products, quantity, total cost,sales tax and the total value of the bill.Data for 10 Productsand1 bill areadded duringstartuptobrowse.
+SoftwareRequirementsSpecificationforRetailAPI
+Below is overview of RESTend points:
+Products
+GET/productsfetcheslist of all productdata
+GET/products/{id} fetcha specificproduct
+POST/productsCreatesanew productbasedon requestJSON
+PUT /products/{id} Updatesproductdatabasedon requestJSON
+DELETE/products/{id} Delete anexisting product if it is not associatedwitha bill.
+Bills
+GET/billsfetches all bill data
+GET/bills/{id}fetches bill of aparticular id
+POST/bills createsabill Id.Client hastouse thisbill Idwhile adding andremoving products
+PUT /bills/{id}Updatesbill data.Client canadd or remove productstobill sending aJSONrequest.
+DELETE/bills/{id} Deletebill fromthesystem.
+ProductCatagory
+GET/productcatagoriesfetcheslist of all productcatagorydata
+GET/productcatagory/{id} fetcha specificproductcatagory
+POST/productcatagoryCreatesanew productcatagorybasedon requestJSON
+PUT /productcatagory/{id} Updatesproductcatagorydatabased onrequestJSON
+DELETE/productcatagory/{id} Delete anexistingproductcatagory
+SoftwareRequirementsSpecificationforRetailAPI
+2.3 RetailClassesandCharacteristics
+2.3.1 Orders: The site is solely for the testers/developers that it has who wants to experiment HTTP CRUD operation. The Orders are expected to have little proficiency so that site’s reputation doesn’t get affected.
+2.4 OperatingEnvironment
+Thissite iscompatible withalmost all web browsers, tomention some: Chrome. MozillaFirefox. Apple Safari. MicrosoftIE9etc.
+Thissoftware is compatible torun onanyoperating system,likeLinux, windows, Mac OSetc.
+2.5 DesignandImplementationConstraints
+2.5.1 Government Policies: Any policy made to regulate content of discussion or any type of censorship imposedon thesitecould causeinefficientfunction of the site.
+2.5.2 Attacks: Any cyber-attack, specifically distributed denial of services could cause loss financially as well as to the productivity of the site. Proper resources and pre-planning need to be implantedtofacethesame. 2.5.3Post Content: Any improper or vulgar post could harm the reputation of the site as it is viewedby plentyof Ordersincluding variousage groupswith class.
+SoftwareRequirementsSpecificationforRetailAPI
+OrderDocumentation This product is in development stage, and certainly not all required modules are currently included in the same. Once it enters the beta stage. Orders’ manual is not necessary but can be prepared if demanded. 2.6 AssumptionsandDependencies
+It is assumed that the software designed will work correctly with Linux, Windows or Mac Operating System.Withthegivenhardware requirements, software will workefficiently.
+3. ExternalInterfaceRequirements
+3.1 RetailInterfaces
+TheLegacyApplicationisfoundonhttp://dev.icraftsoft.net:8093/ws/retail.wsdl 3.1.1 All Orders: This is present on top middle section. Orders’ can retrieve Product detailed information. 3.1.2 Create Order: This is present on middle section. Orders’ can create Product detailed information. 3.1.3 Find Order: This is present onmiddle section. Orders’ canretrieve a Productinformation. 3.1.4 Update Order: This is present on middle section. Orders’ can update Product detailed information. 3.1.5 Delete Order: This ispresenton middlesection. Orders’ candeleteaProduct.
+SoftwareRequirementsSpecificationforRetailAPI
+3.2 HardwareInterfaces This product requires a system with the following requirements: Intel Xeon E9 Quad Core Processor clocked at 4GHzwith liquid cooingfeatures ADATA 128GB DualChannel DDR4Ram RAID10 100TBStorage OpticalFibers connecting every machine to therouters External CoolingSystem for the CPUas well as harddisk 3.3 SoftwareInterfaces Thefollowing software needsto beinstalled inthesystem: JDK 1.7and plus. Anypoint Studio SoapUI 3.4 CommunicationsInterfaces Thisproduct requiresHTTPprotocolstobe enabled inthefirewall or iptables. A networkconnectivitywith morethanor equal to10Mbps bandwidthis required.
+SoftwareRequirementsSpecificationforRetailAPI
+4. NonfunctionalRequirements
+4.1 PerformanceRequirements The performance of the product under the mentioned hardware and software requirements is expected to result good. Upgrading the system, especially hard drive and needs, network connectivityandcooling systemcould effectively improvise results. 4.2 SafetyRequirements All the mentioned protocols need to be enabled and expected to be properly working on respective ports. Failure of any hardware or software dependencies could lead to malfunction or downtime for thesite. Prevention for various cyber-attacks should be initiated by default as well as additional manual monitoringshould beengaged toprevent downtime.
+4.3 SecurityRequirements Adedicated cyber-securityteam shouldbeengaged tomonitorattacksandprevent downtime. Using obsoletesoftware shouldbe avoided and thereshould betimelycheckfor updates. Depending on the number of Orders, hardware should be upgraded. There should also be timelycheckformaintenanceof componentssuchashard drive, mother board etc. 4.4 SoftwareQualityAttributes This product is applicable to age groups above 3. This will be available in all reasons except GermanyandPoland. Retail API is written in object-oriented pattern and has Restful architecture. Hence it sports easyportability aswell asscalability. Regularbackupis takenandsynchronizedto prevent anytype of loss.
+
+
+
+      

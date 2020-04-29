@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="product_Implementation-test-suite.xml" />
+	<munit:test name="product_Implementation-test-suite-post:\products:retail_api-configTest" doc:id="d217615a-5111-40a5-bbdf-61afdfd66aba" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="6ca37330-4aed-47cb-815c-4eb6e94db5a5" processor="flow">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="post:\products:retail_api-config" attributeName="name" />
+					<munit-tools:with-attribute whereValue="216adbe0-0276-454e-b81d-948272e554c4" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+			<munit-tools:spy doc:name="Spy" doc:id="8a8ed116-e128-45fe-89e3-032286b3ce63" processor="wsc:consume">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Web_Service_Consumer_Config" attributeName="config-ref" />
+					<munit-tools:with-attribute whereValue="CreateProduct" attributeName="operation" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert-that doc:name="Assert that" doc:id="80d43b57-70cc-4cd6-8c9e-4aea1ab4f13a" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert-that doc:name="Assert that" doc:id="f8a09cfc-3762-4980-bf0c-ad9b8c4bae4f" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\products:retail_api-config" doc:id="0d40a40a-d3d6-462b-8a14-d3220706e7b0" name="post:\products:retail_api-config"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

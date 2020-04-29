@@ -1,0 +1,16 @@
+#%RAML 1.0 Trait
+responses:
+  200:
+    body:
+      application/json:
+        example:
+          [ {name="id" type="xs:int"},
+{ name="noOfItems", type="xs:int"},
+{ name="totalCost", type="xs:string"},
+{name="totalTax",ype="xs:string"},
+{name="totalValue", type="xs:string"}]
+  409:
+    body:
+      application/json:
+        example:
+          {"error": "conflict"} 
